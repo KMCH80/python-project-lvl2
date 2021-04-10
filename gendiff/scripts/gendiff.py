@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import argparse
 import json
 import collections
@@ -16,19 +14,15 @@ def generate_diff(first_file, second_file):
     template_inter = dict(template1.items() & template2.items())
     for key in template_order.keys():
         if key in template_inter.keys():
-            diff_res.append(f'{key}: {template_inter[key]}')
+            diff_res.append(f'    {key}: {template_inter[key]}')
         elif key in template1.keys() and key in template2.keys():
-            diff_res.append(f'- {key}: {template1[key]}')
-            diff_res.append(f'+ {key}: {template2[key]}')
+            diff_res.append(f'  - {key}: {template1[key]}')
+            diff_res.append(f'  + {key}: {template2[key]}')
         elif key in template1.keys() and key not in template2.keys():
-            diff_res.append(f'- {key}: {template1[key]}')
+            diff_res.append(f'  - {key}: {template1[key]}')
         else:
-            diff_res.append(f'+ {key}: {template2[key]}')
-
-    print(template1)
-    print(template2)
-
-    str = '\n'.join(diff_res)
+            diff_res.append(f'  + {key}: {template2[key]}')
+    str = '{\n' + '\n'.join(diff_res) + '\n}'
     return str
 
 
