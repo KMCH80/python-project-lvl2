@@ -27,10 +27,10 @@ jobs:
     - name: Run tests
       run: make test
       
-    - name: Publish coverage to Code Climate
-      uses: paambaati/codeclimate-action@v2.7.5
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v2.7.4
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-
-    - name: Publish coverage to Codecov
-      uses: codecov/codecov-action@v1
+      with:
+        coverageCommand: make test-coverage
+        debug: true
