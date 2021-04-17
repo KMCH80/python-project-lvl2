@@ -1,4 +1,4 @@
-name: Linter Flake8
+name: ACTION
 
 on: [push]
 
@@ -21,5 +21,16 @@ jobs:
     - name: Poetry install
       run: make install
         
-    - name: Run my linter
+    - name: Run linter
       run: make lint
+    
+    - name: Run tests
+      run: make test
+      
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v2.7.4
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: make test-coverage
+        debug: true
