@@ -1,1 +1,0 @@
-'{\n'\n '  - follow: false\n'\n '    host: hexlet.io\n'\n '  - proxy: 123.234.53.22\n'\n '  - timeout: 50\n'\n '  + timeout: 20\n'\n '  + verbose: true\n'\n '}') == ("{\\n'\\n '  - follow: false\\n'\\n '    host: hexlet.io\\n'\\n '  - proxy: "\n "123.234.53.22\\n'\\n '  - timeout: 50\\n'\\n '  + timeout: 20\\n'\\n '  + "\n "verbose: true\\n'\\n '}'
