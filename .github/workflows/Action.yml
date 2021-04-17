@@ -1,4 +1,4 @@
-name: Linter Flake8
+name: ACTION
 
 on: [push]
 
