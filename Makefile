@@ -1,7 +1,7 @@
 install:
 	poetry install
 gendiff:
-	poetry run gendiff files/file1.json files/file2.json 
+	poetry run gendiff
 build:
 	poetry build
 publish:

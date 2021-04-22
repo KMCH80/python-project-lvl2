@@ -1,17 +1,13 @@
 import argparse
-import json
+import file_reader
 import collections
 
 
 def generate_diff(first_file, second_file):
     diff_res = []
-    with open(first_file) as f1:
-        template1 = json.load(f1)
-    with open(second_file) as f2:
-        template2 = json.load(f2)
-
-    template1 = format_json_types(template1)
-    template2 = format_json_types(template2)
+    templates = file_reader.get_dics_from_files(first_file, second_file)
+    template1 = format_types(templates[0])
+    template2 = format_types(templates[1])
 
     union_template = dict(template1.items() | template2.items())
     template_order = collections.OrderedDict(sorted(union_template.items()))
@@ -30,7 +26,7 @@ def generate_diff(first_file, second_file):
     return str
 
 
-def format_json_types(dic):
+def format_types(dic):
     for key, value in dic.items():
         if value is True:
             dic[key] = 'true'

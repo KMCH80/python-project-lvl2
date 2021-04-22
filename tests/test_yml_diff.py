@@ -13,12 +13,12 @@ def result_test1():
 
 @pytest.fixture
 def file1_test1():
-    return 'tests/fixtures/test1_file1.json'
+    return 'tests/fixtures/test1_file1.yml'
 
 
 @pytest.fixture
 def file2_test1():
-    return 'tests/fixtures/test1_file2.json'
+    return 'tests/fixtures/test1_file2.yml'
 
 
 def test_removes_generate_diff(file1_test1, file2_test1, result_test1):
@@ -36,12 +36,12 @@ def result_test2():
 
 @pytest.fixture
 def file1_test2():
-    return 'tests/fixtures/test2_file1.json'
+    return 'tests/fixtures/test2_file1.yml'
 
 
 @pytest.fixture
 def file2_test2():
-    return 'tests/fixtures/test2_file2.json'
+    return 'tests/fixtures/test2_file2.yml'
 
 
 def test_adds_generate_diff(file1_test2, file2_test2, result_test2):
@@ -59,12 +59,12 @@ def result_test3():
 
 @pytest.fixture
 def file1_test3():
-    return 'tests/fixtures/test3_file1.json'
+    return 'tests/fixtures/test3_file1.yml'
 
 
 @pytest.fixture
 def file2_test3():
-    return 'tests/fixtures/test3_file2.json'
+    return 'tests/fixtures/test3_file2.yml'
 
 
 def test_changes_generate_diff(file1_test3, file2_test3, result_test3):
@@ -82,12 +82,12 @@ def result_test4():
 
 @pytest.fixture
 def file1_test4():
-    return 'tests/fixtures/test4_file1.json'
+    return 'tests/fixtures/test4_file1.yml'
 
 
 @pytest.fixture
 def file2_test4():
-    return 'tests/fixtures/test4_file2.json'
+    return 'tests/fixtures/test4_file2.yml'
 
 
 def test_static_generate_diff(file1_test4, file2_test4, result_test4):
@@ -105,12 +105,12 @@ def result_test5():
 
 @pytest.fixture
 def file1_test5():
-    return 'tests/fixtures/test5_file1.json'
+    return 'tests/fixtures/test5_file1.yml'
 
 
 @pytest.fixture
 def file2_test5():
-    return 'tests/fixtures/test5_file2.json'
+    return 'tests/fixtures/test5_file2.yml'
 
 
 def test_sorted_generate_diff(file1_test5, file2_test5, result_test5):
