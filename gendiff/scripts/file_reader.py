@@ -22,3 +22,11 @@ def get_dic_yml(file):
 def get_dic_json(file):
     with open(file) as f:
         return json.load(f)
+
+
+def main():
+    pass
+
+
+if __name__ == '__main__':
+    main()
