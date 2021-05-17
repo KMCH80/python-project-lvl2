@@ -1,33 +1,23 @@
 import argparse
 import file_reader
-import collections
+
+from diff import match_templates
+from stylish import str_formater
 
 
 def generate_diff(first_file, second_file):
-    diff_res = []
     templates = file_reader.get_dics_from_files(first_file, second_file)
     template1 = format_types(templates[0])
     template2 = format_types(templates[1])
-
-    union_template = dict(template1.items() | template2.items())
-    template_order = collections.OrderedDict(sorted(union_template.items()))
-    template_intersect = dict(template1.items() & template2.items())
-    for key in template_order.keys():
-        if key in template_intersect.keys():
-            diff_res.append(f'    {key}: {template_intersect[key]}')
-        elif key in template1.keys() and key in template2.keys():
-            diff_res.append(f'  - {key}: {template1[key]}')
-            diff_res.append(f'  + {key}: {template2[key]}')
-        elif key in template1.keys() and key not in template2.keys():
-            diff_res.append(f'  - {key}: {template1[key]}')
-        else:
-            diff_res.append(f'  + {key}: {template2[key]}')
-    str = '{\n' + '\n'.join(diff_res) + '\n}'
-    return str
+    diff = match_templates(template1, template2)
+    diff_res = []
+    return str_formater(template1, template2, diff, diff_res)
 
 
 def format_types(dic):
     for key, value in dic.items():
+        if isinstance(value, dict):
+            format_types(value)
         if value is True:
             dic[key] = 'true'
         elif value is False:
@@ -45,7 +35,7 @@ def main():
     args = parser.parse_args()
 
     print(generate_diff(args.first_file, args.second_file))
-
+    # print(generate_diff('files/file3_1.json', 'files/file3_2.json'))
 
 if __name__ == '__main__':
     main()
