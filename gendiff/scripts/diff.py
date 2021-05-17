@@ -23,6 +23,7 @@ def get_change_or_not_status(value1, value2):
         status = "changed"
     return status
 
+
 def match_templates_new(template1: dict, template2: dict, diff: dict):
     for key1, value1 in template2.items():
         flag = False
