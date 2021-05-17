@@ -15,15 +15,16 @@ def generate_diff(first_file, second_file):
 
 
 def format_types(dic):
+    dic_of_types = {
+        'True': "true",
+        'False': "false",
+        'None': "null",
+    }
     for key, value in dic.items():
         if isinstance(value, dict):
             format_types(value)
-        if value is True:
-            dic[key] = 'true'
-        elif value is False:
-            dic[key] = 'false'
-        elif value is None:
-            dic[key] = 'null'
+        if str(value) in dic_of_types:
+            dic[key] = dic_of_types[str(value)]
     return dic
 
 
