@@ -35,7 +35,7 @@ def main():
     args = parser.parse_args()
 
     print(generate_diff(args.first_file, args.second_file))
-    # print(generate_diff('files/file3_1.json', 'files/file3_2.json'))
+
 
 if __name__ == '__main__':
     main()
