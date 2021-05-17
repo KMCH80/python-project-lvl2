@@ -5,3 +5,4 @@
 <a href="https://codeclimate.com/github/KMCH80/python-project-lvl2/test_coverage"><img src="https://api.codeclimate.com/v1/badges/4addd77e19debe4bb696/test_coverage" /></a>
 [![asciicast](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR.svg)](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR)
 [![asciicast](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u.svg)](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u)
+[![asciicast](https://asciinema.org/a/OKaT3k5nPHa0xWmhTAiXIbFgf.svg)](https://asciinema.org/a/OKaT3k5nPHa0xWmhTAiXIbFgf)
