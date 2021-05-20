@@ -1,6 +1,6 @@
 import pytest
 from diff import match_templates
-from stylish import str_formater
+from formaters.stylish import stylish_formater
 
 
 @pytest.mark.parametrize('tree1, tree2, expected', [
@@ -113,4 +113,4 @@ def test_tree2(tree1, tree2, expected):
     diff = match_templates(tree1, tree2)
     diff_res = []
     str = '{\n' + '\n'.join(expected) + '\n}'
-    assert str_formater(tree1, tree2, diff, diff_res) == str
+    assert stylish_formater(tree1, tree2, diff, diff_res) == str
