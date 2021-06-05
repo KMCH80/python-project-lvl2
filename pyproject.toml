@@ -11,7 +11,7 @@ packages = [
 gendiff = "gendiff.scripts.gendiff:main"
 
 [tool.poetry.dependencies]
-python = "3.9"
+python = "3.8"
 argparse = "^1.4.0"
 pytest = "^6.2.3"
 pytest-cov = "^2.11.1"
