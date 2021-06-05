@@ -56,5 +56,8 @@ def get_changed_comment(text, value1, value2):
 
 def format_special_types(value):
     if value not in SPECIAL_TYPES:
-        return f"'{value}'"
+        if type(value) == int or type(value) == float:
+            return f"{value}"
+        else:
+            return f"'{value}'"
     return value
