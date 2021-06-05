@@ -197,8 +197,8 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.9"
-content-hash = "4d8b00a463d86034944ca5f1372668c137bad9a6b1e980796ed2b122711fc13b"
+python-versions = "3.8"
+content-hash = "4b532c7095301fb51b0ce4a22f559062799fc4b25e67bbd920f0a47a8de9f799"
 
 [metadata.files]
 argparse = [
