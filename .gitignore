@@ -1,7 +1,13 @@
 .venv/
 .vscode/
 .DS_Store
+.pytest_cache/
+.coverage
 gendiff/__pycache__/
 gendiff/scripts/__pycache__
+gendiff/scripts/formaters/__pycache__
+tests/__pycache__
+tests/fixtures/__pycache__
+
 dist/
 tests/__pycache__/

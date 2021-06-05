@@ -8,32 +8,32 @@ TEXT_COMMENTS = {
 SPECIAL_TYPES = ['true', 'false', 'null']
 
 
-def plain_formater(template1, template2, diff, diff_res, path=''):
-    diff_sorted = collections.OrderedDict(sorted(diff.items()))
-    temp_sorted1 = collections.OrderedDict(sorted(template1.items()))
-    temp_sorted2 = collections.OrderedDict(sorted(template2.items()))
-    for key, value in diff_sorted.items():
+def plain_formater(data1, data2, diff, diff_result, path=''):
+    sorted_diff = collections.OrderedDict(sorted(diff.items()))
+    sorted_data1 = collections.OrderedDict(sorted(data1.items()))
+    sorted_data2 = collections.OrderedDict(sorted(data2.items()))
+    for key, value in sorted_diff.items():
         path += f'{key}'
         if isinstance(value, dict):
             path += '.'
-            plain_formater(temp_sorted1[key], temp_sorted2[key], value,
-                           diff_res, path)
+            plain_formater(sorted_data1[key], sorted_data2[key], value,
+                           diff_result, path)
             path = path[:-1]
         if value == "added":
-            comment = get_added_comment(TEXT_COMMENTS[value], temp_sorted2[key])
+            comment = get_added_comment(TEXT_COMMENTS[value], sorted_data2[key])
 
         elif value == "changed":
             comment = get_changed_comment(
-                TEXT_COMMENTS[value], temp_sorted1[key], temp_sorted2[key])
+                TEXT_COMMENTS[value], sorted_data1[key], sorted_data2[key])
         elif value == "deleted":
             comment = f'{TEXT_COMMENTS[value]}'
         else:
             path = path[:-len(key)]
             continue
-        diff_res.append(f"Property '{path}' {comment}")
+        diff_result.append(f"Property '{path}' {comment}")
         path = path[:-len(key)]
-    str = '\n'.join(diff_res)
-    return str
+    result_string = '\n'.join(diff_result)
+    return result_string
 
 
 def get_added_comment(text, value):
@@ -56,5 +56,8 @@ def get_changed_comment(text, value1, value2):
 
 def format_special_types(value):
     if value not in SPECIAL_TYPES:
-        return f"'{value}'"
+        if type(value) == int or type(value) == float:
+            return f"{value}"
+        else:
+            return f"'{value}'"
     return value
