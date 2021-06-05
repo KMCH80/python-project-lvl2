@@ -30,7 +30,8 @@ def get_matched_new_data(data1: dict, data2: dict, diff: dict):
         for key2, value2 in data1.items():
             if key1 == key2:
                 flag = True
-                if value1 != value2 and isinstance(value1, dict):
+                if value1 != value2 and isinstance(value1, dict) and isinstance(
+                        value2, dict):
                     get_matched_new_data(value2, value1, diff[key1])
                 break
         if not flag:
