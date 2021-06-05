@@ -1,24 +1,29 @@
 import argparse
 import file_reader
 
-from diff import match_templates
+from diff import get_matched_data
 from formaters.stylish import stylish_formater
 from formaters.plain import plain_formater
+from formaters.json import json_formater
 
 
-def generate_diff(first_file, second_file, format_name=0):
-    templates = file_reader.get_dics_from_files(first_file, second_file)
-    template1 = format_types(templates[0])
-    template2 = format_types(templates[1])
-    diff = match_templates(template1, template2)
-    diff_res = []
+def generate_diff(file1, file2, format_name=0):
+    get_data_from_file1_file2 = file_reader.get_data_from_files(
+        file1, file2)
+    data1 = format_special_types(get_data_from_file1_file2[0])
+    data2 = format_special_types(get_data_from_file1_file2[1])
+    diff = get_matched_data(data1, data2)
+    diff_result = []
+    diff_json_result = {}
     if format_name == 'plain':
-        return plain_formater(template1, template2, diff, diff_res)
+        return plain_formater(data1, data2, diff, diff_result)
+    elif format_name == 'json':
+        return json_formater(data1, data2, diff, diff_json_result)
     else:
-        return stylish_formater(template1, template2, diff, diff_res)
+        return stylish_formater(data1, data2, diff, diff_result)
 
 
-def format_types(dic):
+def format_special_types(dic):
     dic_of_types = {
         'True': "true",
         'False': "false",
@@ -26,7 +31,7 @@ def format_types(dic):
     }
     for key, value in dic.items():
         if isinstance(value, dict):
-            format_types(value)
+            format_special_types(value)
         if str(value) in dic_of_types:
             dic[key] = dic_of_types[str(value)]
     return dic

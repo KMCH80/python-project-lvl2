@@ -35,5 +35,5 @@ def file2_yml_test():
 
 
 def test_plain_yml_diff(file1_yml_test, file2_yml_test, result_plain):
-    assert generate_diff(file1_yml_test, file2_yml_test, 'plain') == result_plain
-    
+    assert generate_diff(
+        file1_yml_test, file2_yml_test, 'plain') == result_plain
