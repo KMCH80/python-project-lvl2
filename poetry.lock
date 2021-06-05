@@ -168,8 +168,8 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [metadata]
 lock-version = "1.1"
-python-versions = "3.8"
-content-hash = "3daa3cdf92cecec0e37cf687e963c5eaeea46b08fd0eb2f8a6cb1c4a178688ce"
+python-versions = "^3.8"
+content-hash = "e7c6e4cf239e4cf6df497f3be0a00a7801e4086a3e761e1a6ca9f08192cfb186"
 
 [metadata.files]
 argparse = [
