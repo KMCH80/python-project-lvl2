@@ -17,7 +17,7 @@ Show help information:
 ```bash
 gendiff -h
 ```
-Present difference in standart format performance. <file1>, <file2> - full file names:
+Present difference in standart format performance. <file1> and <file2> - full file names:
 ```bash
 gendiff <file1> <file2>
 ```
