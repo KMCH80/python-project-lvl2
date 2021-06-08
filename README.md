@@ -13,17 +13,20 @@ pip install git+https://github.com/KMCH80/python-project-lvl2.git
 ```
 
 ## Running commands
+Show help information:
 ```bash
 gendiff -h command
 ```
-show you help information
+Present difference in standart format performance (<file1>, <file2> - full file names)
+```bash
+gendiff <file1> <file2>
+```
 
+Present difference in another format performance (<format> could be: plain or json)
 ```bash
-gendiff <file1> <file2> command show you difference in standart performance (<file1> and <file2> - full files names)
+gendiff -f <format> <file1> <file2> 
 ```
-```bash
-gendiff -f <format> <file1> <file2> command let you choose format performance (<format> could be plain or json)
-```
+
 ```bash
 Try me! 😉
 ```
