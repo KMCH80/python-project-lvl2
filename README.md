@@ -27,8 +27,7 @@ Present difference in another format performance. format_name - plain or json:
 gendiff -f format_name file1 file2 
 ```
 
-
-##Try me! 😉
+Try me! 😉
 
 [![asciicast](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR.svg)](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR)
 [![asciicast](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u.svg)](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u)
