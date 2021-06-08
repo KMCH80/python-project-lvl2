@@ -17,19 +17,19 @@ Show help information:
 ```bash
 gendiff -h
 ```
-Present difference in standart format performance. <file1> and <file2> - full file names:
+Present difference in standart format performance. file1 and file2 - full file names:
 ```bash
-gendiff <file1> <file2>
+gendiff file1 file2
 ```
 
-Present difference in another format performance. <format> could be: plain or json:
+Present difference in another format performance. format_name - plain or json:
 ```bash
-gendiff -f <format> <file1> <file2> 
+gendiff -f format_name file1 file2 
 ```
 
-```bash
-Try me! 😉
-```
+
+##Try me! 😉
+
 [![asciicast](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR.svg)](https://asciinema.org/a/YB5zWhaJeNf4oIXq8b1FN5rfR)
 [![asciicast](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u.svg)](https://asciinema.org/a/w01wuBwDfieGuBetZtB5Y2v0u)
 [![asciicast](https://asciinema.org/a/Y9cj3AbCemR5iLMDq960QLcah.svg)](https://asciinema.org/a/Y9cj3AbCemR5iLMDq960QLcah)
