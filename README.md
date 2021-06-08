@@ -15,7 +15,7 @@ pip install git+https://github.com/KMCH80/python-project-lvl2.git
 ## Running commands
 ```bash
 gendiff -h command
-'''
+```
 show you help information
 
 ```bash
