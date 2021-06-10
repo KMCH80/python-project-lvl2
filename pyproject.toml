@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "hexlet-code"
+name = "python-project-lvl2"
 version = "0.1.0"
 description = ""
 authors = ["Alexey Kim <kmlx@yandex.ru>"]
@@ -12,15 +12,13 @@ gendiff = "gendiff.scripts.gendiff:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-flake8 = "^3.9.2"
 PyYAML = "^5.4.1"
 
-
 [tool.poetry.dev-dependencies]
+pytest = "^6.2.4"
+flake8 = "^3.9.2"
 autopep8 = "^1.5.7"
-pytest = "^6.2.3"
-pytest-cov = "^2.11.1"
-argparse = "^1.4.0"
+pytest-cov = "^2.12.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
