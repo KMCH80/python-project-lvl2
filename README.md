@@ -24,7 +24,7 @@ gendiff <file1> <file2>
 
 Display difference in chosen format performance. format_name - plain or json:
 ```bash
-gendiff -f format_name <file1> <file2> 
+gendiff -f <format_name> <file1> <file2> 
 ```
 
 Try me! 😉
