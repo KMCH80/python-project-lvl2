@@ -31,11 +31,3 @@ def get_data_from_json(file):
     except OSError:
         print('Could not open file:', file)
         sys.exit()
-
-
-def main():
-    pass
-
-
-if __name__ == '__main__':
-    main()
