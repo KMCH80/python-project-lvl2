@@ -8,6 +8,8 @@ gendiff/scripts/__pycache__/
 gendiff/scripts/formaters/__pycache__/
 tests/__pycache__
 tests/fixtures/__pycache__/
-
+coverage.xml
+files/
 dist/
 tests/__pycache__/
+__pycache__/
