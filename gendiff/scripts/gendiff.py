@@ -1,4 +1,5 @@
 import argparse
+import os
 from gendiff import file_reader
 from gendiff.formaters.stylish import stylish_formater
 from gendiff.formaters.plain import plain_formater

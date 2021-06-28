@@ -1,5 +1,3 @@
-{
-    "A": 1,
-    "B": true,
-    "C": "Hello"
-}
+A: 1
+B: true
+C: Hello
