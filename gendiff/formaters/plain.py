@@ -8,25 +8,21 @@ TEXT_COMMENTS = {
 SPECIAL_TYPES = ['true', 'false', 'null']
 
 
-def plain_formater(data1, data2, diff, diff_result, path=''):
+def plain_formater(diff, diff_result, path=''):
     sorted_diff = collections.OrderedDict(sorted(diff.items()))
-    sorted_data1 = collections.OrderedDict(sorted(data1.items()))
-    sorted_data2 = collections.OrderedDict(sorted(data2.items()))
     for key, value in sorted_diff.items():
         path += f'{key}'
         if isinstance(value, dict):
             path += '.'
-            plain_formater(sorted_data1[key], sorted_data2[key], value,
-                           diff_result, path)
+            plain_formater(value, diff_result, path)
             path = path[:-1]
-        if value == "added":
-            comment = get_added_comment(TEXT_COMMENTS[value], sorted_data2[key])
-
-        elif value == "changed":
+        if "added" in value:
+            comment = get_added_comment(TEXT_COMMENTS["added"], value[0])
+        elif "changed" in value:
             comment = get_changed_comment(
-                TEXT_COMMENTS[value], sorted_data1[key], sorted_data2[key])
-        elif value == "deleted":
-            comment = f'{TEXT_COMMENTS[value]}'
+                TEXT_COMMENTS["changed"], value[0], value[1])
+        elif "deleted" in value:
+            comment = f'{TEXT_COMMENTS["deleted"]}'
         else:
             path = path[:-len(key)]
             continue
@@ -34,6 +30,18 @@ def plain_formater(data1, data2, diff, diff_result, path=''):
         path = path[:-len(key)]
     result_string = '\n'.join(diff_result)
     return result_string
+
+
+def format_value_special_type(value):
+    dic_of_types = {
+        'True': "true",
+        'False': "false",
+        'None': "null",
+    }
+    if str(value) in dic_of_types:
+        return dic_of_types[str(value)]
+    else:
+        return value
 
 
 def get_added_comment(text, value):
@@ -55,6 +63,7 @@ def get_changed_comment(text, value1, value2):
 
 
 def format_special_types(value):
+    value = format_value_special_type(value)
     if value not in SPECIAL_TYPES:
         if type(value) == int or type(value) == float:
             return f"{value}"
