@@ -13,6 +13,7 @@ def stylish_formater(diff: dict, diff_result: list, tree_space=''):
             stylish_formater(value, diff_result, tree_space)
             diff_result.append(f'{tree_space}}}')
             tree_space = tree_space[:-len(TREE_SPACE)]
+            continue
         if 'changed' in value:
             add_string_to_diff(
                 f'- {key}', format_value_special_type(diff[key][0]),
@@ -22,20 +23,15 @@ def stylish_formater(diff: dict, diff_result: list, tree_space=''):
                 f'+ {key}', format_value_special_type(diff[key][1]),
                 tree_space, diff_result
             )
-        if 'deleted' in value:
+        else:
+            key_format = {
+                "deleted": f'- {key}',
+                "added": f'+ {key}',
+                "not changed": f'  {key}'
+            }
+            str_key = key_format[value[1]]
             add_string_to_diff(
-                f'- {key}', format_value_special_type(diff[key][0]),
-                tree_space, diff_result
-            )
-        if 'added' in value:
-            add_string_to_diff(
-                f'+ {key}', format_value_special_type(diff[key][0]),
-                tree_space, diff_result
-            )
-        if 'not changed' in value:
-            add_string_to_diff(
-                f'  {key}', format_value_special_type(diff[key][0]),
-                tree_space, diff_result
+                str_key, diff[key][0], tree_space, diff_result
             )
     result_string = '{\n' + '\n'.join(diff_result) + '\n}'
     return result_string
@@ -66,11 +62,11 @@ def add_dict_in_dict(tree_space, key, add_dict, in_dict):
     in_dict.append(f'{tree_space}{DICT_SPACE}  }}')
 
 
-def add_string_to_diff(key, value, space, diff_result):
+def add_string_to_diff(str_key, value, space, diff_result):
     if isinstance(value, dict):
         add_dict_in_dict(
-            space, f'{key}', value, diff_result)
+            space, str_key, value, diff_result)
     else:
         diff_result.append(
-            f'{space}{DICT_SPACE}{key}: {value}'
+            f'{space}{DICT_SPACE}{str_key}: {format_value_special_type(value)}'
         )
