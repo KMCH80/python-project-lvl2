@@ -5,51 +5,36 @@ TEXT_COMMENTS = {
     'changed': 'was updated. From ',
     'deleted': 'was removed'
 }
-SPECIAL_TYPES = ['true', 'false', 'null']
 
 
 def plain_formater(diff, diff_result, path=''):
     sorted_diff = collections.OrderedDict(sorted(diff.items()))
     for key, value in sorted_diff.items():
-        path += f'{key}'
-        if isinstance(value, dict):
-            path += '.'
-            plain_formater(value, diff_result, path)
-            path = path[:-1]
-        if "added" in value:
-            comment = get_added_comment(TEXT_COMMENTS["added"], value[0])
-        elif "changed" in value:
-            comment = get_changed_comment(
-                TEXT_COMMENTS["changed"], value[0], value[1])
-        elif "deleted" in value:
-            comment = f'{TEXT_COMMENTS["deleted"]}'
-        else:
-            path = path[:-len(key)]
+        if value[0] == 'is_dict':
+            new_path = path + f'{key}.'
+            plain_formater(value[1], diff_result, new_path)
             continue
-        diff_result.append(f"Property '{path}' {comment}")
-        path = path[:-len(key)]
+        if len(value) == 2 and value[1] == "not changed":
+            continue
+        comment = get_comment(value)
+        diff_result.append(f"Property '{path}{key}' {comment}")
     result_string = '\n'.join(diff_result)
     return result_string
 
 
-def format_value_special_type(value):
-    dic_of_types = {
-        'True': "true",
-        'False': "false",
-        'None': "null",
-    }
-    if str(value) in dic_of_types:
-        return dic_of_types[str(value)]
-    else:
-        return value
+def get_comment(value):
+    if len(value) and value[1] == "added":
+        return get_added_comment(TEXT_COMMENTS[value[1]], value[0])
+    if len(value) == 2 and value[1] == "deleted":
+        return f'{TEXT_COMMENTS[value[1]]}'
+    if len(value) == 3 and value[2] == "changed":
+        return get_changed_comment(TEXT_COMMENTS[value[2]], value[0], value[1])
 
 
 def get_added_comment(text, value):
     if isinstance(value, dict):
-        comment = '[complex value]'
-    else:
-        comment = format_special_types(value)
-    return f'{text}{comment}'
+        return f'{text}[complex value]'
+    return f'{text}{format_special_types(value)}'
 
 
 def get_changed_comment(text, value1, value2):
@@ -63,10 +48,10 @@ def get_changed_comment(text, value1, value2):
 
 
 def format_special_types(value):
-    value = format_value_special_type(value)
-    if value not in SPECIAL_TYPES:
-        if type(value) == int or type(value) == float:
-            return f"{value}"
-        else:
-            return f"'{value}'"
-    return value
+    if value is True:
+        return 'true'
+    if value is False:
+        return 'false'
+    if value is None:
+        return 'null'
+    return f"'{value}'"

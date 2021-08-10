@@ -1,36 +1,20 @@
 import argparse
-from gendiff import file_reader
-from gendiff.formaters.stylish import stylish_formater
-from gendiff.formaters.plain import plain_formater
-from gendiff.formaters.json import json_formater
-from gendiff.diff import get_matched_data
-
-
-def generate_diff(file1, file2, format_name='stylish'):
-    try:
-        data1 = file_reader.get_data_from_file(file1)
-        data2 = file_reader.get_data_from_file(file2)
-    except FileNotFoundError:
-        print("File not found!")
-    diff = get_matched_data(data1, data2)
-    diff_result = []
-    diff_json_result = {}
-    if format_name == 'plain':
-        return plain_formater(diff, diff_result)
-    elif format_name == 'json':
-        return json_formater(diff, diff_json_result)
-    elif format_name == 'stylish':
-        return stylish_formater(diff, diff_result)
+from gendiff.diff import STYLE_OPT_JSON, STYLE_OPT_PLAIN, STYLE_OPT_STYLISH
+from gendiff.diff import generate_diff
 
 
 def main():
     parser = argparse.ArgumentParser(description='Generate diff')
     parser.add_argument('first_file', help='')
     parser.add_argument('second_file', help='')
-    parser.add_argument('-f', '--format', choices=['stylish', 'plain', 'json'],
-                        default='stylish', help='set format of output')
+    parser.add_argument('-f', '--format', choices=[STYLE_OPT_STYLISH,
+                        STYLE_OPT_PLAIN, STYLE_OPT_JSON],
+                        default=STYLE_OPT_STYLISH, help='set format of output')
     args = parser.parse_args()
-    print(generate_diff(args.first_file, args.second_file, args.format))
+    try:
+        print(generate_diff(args.first_file, args.second_file, args.format))
+    except Exception as e:
+        print(e)
 
 
 if __name__ == '__main__':

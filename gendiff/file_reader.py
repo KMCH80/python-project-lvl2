@@ -5,10 +5,10 @@ import json
 
 def get_data_from_file(file):
     extention = os.path.splitext(file)[1]
+    extention = extention.lower()
     with open(file) as f:
-        if (extention.lower() == ".yml") or (extention.lower() == ".yaml"):
+        if (extention == ".yml") or (extention == ".yaml"):
             return yaml.safe_load(f)
-        elif (extention.lower() == ".json"):
+        if (extention == ".json"):
             return json.load(f)
-        else:
-            return 0
+        raise Exception("Wrong file extension!")
