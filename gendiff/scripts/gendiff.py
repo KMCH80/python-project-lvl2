@@ -1,6 +1,6 @@
 import argparse
-from gendiff.diff import STYLE_OPT_JSON, STYLE_OPT_PLAIN, STYLE_OPT_STYLISH
-from gendiff.diff import generate_diff
+from gendiff import STYLE_OPT_JSON, STYLE_OPT_PLAIN, STYLE_OPT_STYLISH
+from gendiff import generate_diff
 
 
 def main():
