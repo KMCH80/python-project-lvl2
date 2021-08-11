@@ -54,6 +54,6 @@ def format_special_types(value):
         return 'false'
     if value is None:
         return 'null'
-    if value is int:
+    if type(value) is int:
         return value
     return f"'{value}'"
