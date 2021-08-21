@@ -1,45 +1,37 @@
 from gendiff import file_reader
-from gendiff.formaters.stylish import stylish_formater
-from gendiff.formaters.plain import plain_formater
-from gendiff.formaters.json import json_formater
+from gendiff.format_selector import STYLE_OPT_STYLISH
+from gendiff.format_selector import get_selected_format
 
-STYLE_OPT_JSON = 'json'
-STYLE_OPT_PLAIN = 'plain'
-STYLE_OPT_STYLISH = 'stylish'
+ADDED_STATUS = 'added'
+DELETED_STATUS = 'deleted'
+NOT_CHANGED_STATUS = 'not changed'
+CHANGED_STATUS = 'changed'
+IS_DICT_STATUS = 'is dict'
 
 
 def generate_diff(file1, file2, format_name=STYLE_OPT_STYLISH):
     data1 = file_reader.get_data_from_file(file1)
     data2 = file_reader.get_data_from_file(file2)
-    diff = get_elements_changes(data1, data2, diff={})
-    if format_name == STYLE_OPT_PLAIN:
-        return plain_formater(diff, diff_result=[])
-    if format_name == STYLE_OPT_JSON:
-        return json_formater(diff, diff_json_result={})
-    if format_name == STYLE_OPT_STYLISH:
-        return stylish_formater(diff, diff_result=[])
-    raise Exception("Wrong format_name!")
+    diff = get_elements_status(data1, data2)
+    return get_selected_format(format_name, diff)
 
 
-def get_united_data(data1, data2):
-    return {**data2, **data1}
-
-
-def get_elements_changes(data1: dict, data2: dict, diff: dict):
-    united_data = get_united_data(data1, data2)
-    for key, value in united_data.items():
-        if key not in data1:
-            diff[key] = (value, 'added')
-            continue
-        if key not in data2:
-            diff[key] = (value, 'deleted')
-            continue
-        if data1[key] == data2[key]:
-            diff[key] = (value, 'not changed')
-            continue
-        if isinstance(data1[key], dict) and isinstance(data2[key], dict):
-            diff.update({key: ('is_dict', {})})
-            get_elements_changes(data1[key], data2[key], diff[key][1])
-            continue
-        diff[key] = (value, data2[key], 'changed')
+def get_elements_status(data1: dict, data2: dict):
+    diff = {}
+    united_keys = data1.keys() | data2.keys()
+    for key in united_keys:
+        diff[key] = get_element_status(key, data1, data2)
     return diff
+
+
+def get_element_status(key, data1, data2):
+    if key not in data1.keys():
+        return ADDED_STATUS, data2[key]
+    if key not in data2.keys():
+        return DELETED_STATUS, data1[key]
+    if data1[key] == data2[key]:
+        return NOT_CHANGED_STATUS, data2[key]
+    if isinstance(data1[key], dict) and isinstance(data2[key], dict):
+        return IS_DICT_STATUS, get_elements_status(
+            data1[key], data2[key])
+    return CHANGED_STATUS, (data1[key], data2[key])

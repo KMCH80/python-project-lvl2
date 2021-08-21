@@ -1,50 +1,50 @@
-import collections
+ADDED_STATUS = 'added'
+DELETED_STATUS = 'deleted'
+NOT_CHANGED_STATUS = 'not changed'
+CHANGED_STATUS = 'changed'
+IS_DICT_STATUS = 'is dict'
+COMPLEX_VALUE = '[complex value]'
 
-TEXT_COMMENTS = {
-    'added': 'was added with value: ',
-    'changed': 'was updated. From ',
-    'deleted': 'was removed'
-}
 
-
-def plain_formater(diff, diff_result, path=''):
-    sorted_diff = collections.OrderedDict(sorted(diff.items()))
-    for key, value in sorted_diff.items():
-        if value[0] == 'is_dict':
-            new_path = path + f'{key}.'
-            plain_formater(value[1], diff_result, new_path)
-            continue
-        if len(value) == 2 and value[1] == "not changed":
-            continue
-        comment = get_comment(value)
-        diff_result.append(f"Property '{path}{key}' {comment}")
-    result_string = '\n'.join(diff_result)
+def plain_formater(diff):
+    formated_list = get_formated_list(diff)
+    result_string = '\n'.join(formated_list)
     return result_string
 
 
-def get_comment(value):
-    if len(value) and value[1] == "added":
-        return get_added_comment(TEXT_COMMENTS[value[1]], value[0])
-    if len(value) == 2 and value[1] == "deleted":
-        return f'{TEXT_COMMENTS[value[1]]}'
-    if len(value) == 3 and value[2] == "changed":
-        return get_changed_comment(TEXT_COMMENTS[value[2]], value[0], value[1])
+def get_formated_list(diff, path=''):
+    result_list = []
+    diff_sorted = dict(sorted(diff.items()))
+    for key, value in diff_sorted.items():
+        status, diff_value = value
+        if status == NOT_CHANGED_STATUS:
+            continue
+        result_list.extend(get_formated_string(
+            key, status, diff_value, path))
+    return result_list
 
 
-def get_added_comment(text, value):
+def get_formated_string(key, status, diff_value, path):
+    if status == IS_DICT_STATUS:
+        new_path = path + f'{key}.'
+        return get_formated_list(diff_value, new_path)
+    if status == ADDED_STATUS:
+        str = f"Property '{path}{key}' was added with value: " \
+            f"{format_special_types(check_complex_value(diff_value))}"
+        return [str]
+    if status == DELETED_STATUS:
+        return [f"Property '{path}{key}' was removed"]
+    if status == CHANGED_STATUS:
+        str = f"Property '{path}{key}' was updated. " \
+            f"From {format_special_types(check_complex_value(diff_value[0]))}" \
+            f" to {format_special_types(check_complex_value(diff_value[1]))}"
+        return [str]
+
+
+def check_complex_value(value):
     if isinstance(value, dict):
-        return f'{text}[complex value]'
-    return f'{text}{format_special_types(value)}'
-
-
-def get_changed_comment(text, value1, value2):
-    comment1 = format_special_types(value1)
-    comment2 = format_special_types(value2)
-    if isinstance(value1, dict):
-        comment1 = '[complex value]'
-    if isinstance(value2, dict):
-        comment2 = '[complex value]'
-    return (f'{text}{comment1} to {comment2}')
+        return COMPLEX_VALUE
+    return value
 
 
 def format_special_types(value):
@@ -54,6 +54,8 @@ def format_special_types(value):
         return 'false'
     if value is None:
         return 'null'
-    if type(value) is int:
+    if value == COMPLEX_VALUE:
         return value
-    return f"'{value}'"
+    if isinstance(value, str):
+        return f"'{value}'"
+    return value
